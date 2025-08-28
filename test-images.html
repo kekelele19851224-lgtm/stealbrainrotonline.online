@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-image { 
+            width: 200px; 
+            height: 120px; 
+            object-fit: cover; 
+            border: 1px solid #ccc; 
+            margin: 10px; 
+            display: block;
+        }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Image Load Test</h1>
+    
+    <h2>Testing all game cover images:</h2>
+    
+    <div>
+        <h3>Italian Brainrot Puzzle & Battle</h3>
+        <img class="test-image" src="images/Italian Brainrot Puzzle & Battle.jpg" alt="Test 1" 
+             onload="this.nextSibling.innerHTML='✅ Loaded successfully'" 
+             onerror="this.nextSibling.innerHTML='❌ Failed to load'">
+        <span class="status"></span>
+    </div>
+    
+    <div>
+        <h3>Italian Brainrot Neuro Beasts</h3>
+        <img class="test-image" src="images/Italian Brainrot Neuro Beasts.jpg" alt="Test 2"
+             onload="this.nextSibling.innerHTML='✅ Loaded successfully'" 
+             onerror="this.nextSibling.innerHTML='❌ Failed to load'">
+        <span class="status"></span>
+    </div>
+    
+    <div>
+        <h3>Italian Brainrot Puzzle</h3>
+        <img class="test-image" src="images/Italian Brainrot Puzzle.jpg" alt="Test 3"
+             onload="this.nextSibling.innerHTML='✅ Loaded successfully'" 
+             onerror="this.nextSibling.innerHTML='❌ Failed to load'">
+        <span class="status"></span>
+    </div>
+    
+    <div>
+        <h3>Sprunki Italian Brainrot</h3>
+        <img class="test-image" src="images/Sprunki ltalian Brainrot.jpg" alt="Test 4"
+             onload="this.nextSibling.innerHTML='✅ Loaded successfully'" 
+             onerror="this.nextSibling.innerHTML='❌ Failed to load'">
+        <span class="status"></span>
+    </div>
+    
+    <div>
+        <h3>Italian Brainrot Clicker</h3>
+        <img class="test-image" src="images/Italian Brainrot Clicker.jpg" alt="Test 5"
+             onload="this.nextSibling.innerHTML='✅ Loaded successfully'" 
+             onerror="this.nextSibling.innerHTML='❌ Failed to load'">
+        <span class="status"></span>
+    </div>
+    
+    <div>
+        <h3>Italian Brainrot Clicker 2</h3>
+        <img class="test-image" src="images/Italian Brainrot Clicker 2.jpg" alt="Test 6"
+             onload="this.nextSibling.innerHTML='✅ Loaded successfully'" 
+             onerror="this.nextSibling.innerHTML='❌ Failed to load'">
+        <span class="status"></span>
+    </div>
+    
+    <script>
+        // Additional debugging
+        setTimeout(() => {
+            const imgs = document.querySelectorAll('img');
+            imgs.forEach((img, index) => {
+                console.log(`Image ${index + 1}: ${img.src}`);
+                console.log(`Complete: ${img.complete}, Natural Width: ${img.naturalWidth}`);
+            });
+        }, 2000);
+    </script>
+</body>
+</html>
