@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steal Brainrot Online - Clean Version</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6EQKTES411"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6EQKTES411');
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFB347 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .game-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .game-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin: 30px 0;
+            color: white;
+            position: relative;
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        .game-preview h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .game-preview p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .play-button {
+            background: linear-gradient(135deg, #DC143C, #B22222);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px 0;
+        }
+
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(220,20,60,0.4);
+        }
+
+        .countdown-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .countdown-content {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .countdown-content h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .countdown-number {
+            font-size: 6rem;
+            color: #FF6B35;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .countdown-content p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .open-game-button {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            margin: 20px auto;
+        }
+
+        .open-game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255,107,53,0.4);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="game-title">🧠 STEAL BRAINROT ONLINE</h1>
+        <p class="game-subtitle">Ultimate Brain Challenge Game</p>
+        
+        <div class="game-preview" id="gamePreview">
+            <div class="game-icon">🎮</div>
+            <h3>Ready to Play?</h3>
+            <p>Click the button below to start your gaming adventure!</p>
+        </div>
+        
+        <button class="play-button" id="playButton">PLAY GAME</button>
+        <button class="open-game-button" id="openGameButton">🚀 Open Game in New Tab</button>
+    </div>
+
+    <!-- Countdown Overlay -->
+    <div class="countdown-overlay" id="countdownOverlay">
+        <div class="countdown-content">
+            <h2>Game Starting In...</h2>
+            <div class="countdown-number" id="countdownNumber">10</div>
+            <p>Get ready!</p>
+        </div>
+    </div>
+
+    <script>
+        // CLEAN JAVASCRIPT - NO EXTERNAL DEPENDENCIES
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButton = document.getElementById('playButton');
+            const countdownOverlay = document.getElementById('countdownOverlay');
+            const countdownNumber = document.getElementById('countdownNumber');
+            const openGameButton = document.getElementById('openGameButton');
+
+            // Stage 1: Play button click
+            playButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                startCountdown();
+            });
+
+            // Stage 2: Start countdown
+            function startCountdown() {
+                playButton.style.display = 'none';
+                countdownOverlay.style.display = 'flex';
+                
+                let count = 10;
+                const countdownInterval = setInterval(() => {
+                    count--;
+                    countdownNumber.textContent = count;
+                    
+                    if (count <= 0) {
+                        clearInterval(countdownInterval);
+                        showOpenButton();
+                    }
+                }, 1000);
+            }
+
+            // Stage 3: Show open game button
+            function showOpenButton() {
+                countdownOverlay.style.display = 'none';
+                playButton.style.display = 'none';
+                openGameButton.style.display = 'block';
+            }
+
+            // Stage 4: Open game
+            openGameButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                const gameUrl = 'https://www.gameflare.com/embed/roblox-steal-a-brainrot/';
+                const gameWindow = window.open(gameUrl, '_blank', 'width=1200,height=800');
+                
+                if (!gameWindow) {
+                    alert('Please allow popups to open the game!');
+                } else {
+                    openGameButton.textContent = '✅ Game Opened!';
+                    openGameButton.style.background = 'linear-gradient(135deg, #34C759, #30D158)';
+                    
+                    // Add play again button
+                    setTimeout(() => {
+                        const playAgainBtn = document.createElement('button');
+                        playAgainBtn.textContent = '🔄 Play Again';
+                        playAgainBtn.className = 'play-button';
+                        playAgainBtn.onclick = resetGame;
+                        openGameButton.parentNode.appendChild(playAgainBtn);
+                    }, 2000);
+                }
+            });
+
+            // Reset function
+            function resetGame() {
+                playButton.style.display = 'block';
+                countdownOverlay.style.display = 'none';
+                openGameButton.style.display = 'none';
+                openGameButton.textContent = '🚀 Open Game in New Tab';
+                openGameButton.style.background = 'linear-gradient(135deg, #FF6B35, #F7931E)';
+                countdownNumber.textContent = '10';
+                
+                // Remove play again button if exists
+                const playAgainBtn = document.querySelector('.play-button:last-child');
+                if (playAgainBtn && playAgainBtn.textContent.includes('Play Again')) {
+                    playAgainBtn.remove();
+                }
+            }
+        });
+
+        // SECURITY: Block any external script injection
+        window.addEventListener('beforeunload', function() {
+            // Clear any potential malicious intervals
+            for (let i = 1; i < 99999; i++) {
+                window.clearInterval(i);
+                window.clearTimeout(i);
+            }
+        });
+    </script>
+</body>
+</html>

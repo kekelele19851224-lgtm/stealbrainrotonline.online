@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steal Brainrot Online - Clean Version</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6EQKTES411"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6EQKTES411');
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFB347 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-with-sidebar {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .game-left-column {
+            flex: 2;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .games-sidebar {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .games-sidebar h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar-games-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar-game-card {
+            display: flex;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .sidebar-game-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-game-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+
+        .sidebar-game-info {
+            flex: 1;
+        }
+
+        .sidebar-game-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-game-description {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .sidebar-play-btn {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .game-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .game-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin: 30px 0;
+            color: white;
+            position: relative;
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        .game-preview h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .game-preview p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .play-button {
+            background: linear-gradient(135deg, #DC143C, #B22222);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px 0;
+        }
+
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(220,20,60,0.4);
+        }
+
+        .countdown-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            z-index: 10;
+        }
+
+        .countdown-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .countdown-content h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .countdown-number {
+            font-size: 4rem;
+            color: #FF6B35;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .countdown-content p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .open-game-button {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            margin: 20px auto;
+        }
+
+        .open-game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255,107,53,0.4);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        .content-section h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .content-section h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 25px 0 15px 0;
+        }
+
+        .content-section p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .content-section ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .content-section li {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .game-with-sidebar {
+                flex-direction: column;
+            }
+        }
+
+        /* Breadcrumb Navigation Styles */
+        .breadcrumb-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            padding: 16px 0;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .breadcrumb a {
+            color: #007AFF;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            color: #0056CC;
+        }
+
+        .breadcrumb span {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .breadcrumb > span:last-child {
+            color: #666;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            max-height: 44px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.28571rem;
+            font-weight: 600;
+            color: #000;
+            letter-spacing: -0.022em;
+            margin: 0;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.875rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #007AFF;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            header .container {
+                padding: 12px 15px;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            nav a {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Steal Brainrot Online</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="games.html" class="active">All Games</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Breadcrumb Navigation -->
+        <section class="breadcrumb-section">
+            <nav class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span> > </span>
+                <a href="games.html">Games</a>
+                <span> > </span>
+                <span>Steal Brainrot Online</span>
+            </nav>
+        </section>
+        
+        <div class="game-with-sidebar">
+            <div class="game-left-column">
+                <div class="game-container">
+                    <h1 class="game-title">🧠 STEAL BRAINROT ONLINE</h1>
+                    <p class="game-subtitle">Ultimate Brain Challenge Game</p>
+                    
+                    <div class="game-preview" id="gamePreview">
+                        <div class="game-icon">🎮</div>
+                        <h3>Ready to Play?</h3>
+                        <p>Click the button below to start your gaming adventure!</p>
+                        
+                        <!-- Countdown Overlay -->
+                        <div class="countdown-overlay" id="countdownOverlay">
+                            <div class="countdown-content">
+                                <h2>Game Starting In...</h2>
+                                <div class="countdown-number" id="countdownNumber">10</div>
+                                <p>Get ready!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="play-button" id="playButton">PLAY GAME</button>
+                    <button class="open-game-button" id="openGameButton">🚀 Open Game in New Tab</button>
+                </div>
+            </div>
+            
+            <div class="games-sidebar">
+                <h3>More Games</h3>
+                <div class="sidebar-games-list">
+                    <a href="italian-brainrot-neuro-beasts.html" class="sidebar-game-card">
+                        <img src="images/Italian Brainrot Neuro Beasts.jpg" alt="Italian Brainrot Neuro Beasts" class="sidebar-game-image">
+                        <div class="sidebar-game-info">
+                            <div class="sidebar-game-title">Italian Brainrot: Neuro Beasts</div>
+                            <div class="sidebar-game-description">Strategic action gameplay with tactical combat elements</div>
+                            <div class="sidebar-play-btn">Play Now</div>
+                        </div>
+                    </a>
+                    
+                    <a href="italian-brainrot-clicker-2.html" class="sidebar-game-card">
+                        <img src="images/Italian Brainrot Clicker 2.jpg" alt="Italian Brainrot Clicker 2" class="sidebar-game-image">
+                        <div class="sidebar-game-info">
+                            <div class="sidebar-game-title">Italian Brainrot Clicker 2</div>
+                            <div class="sidebar-game-description">Enhanced clicker experience with strategic depth</div>
+                            <div class="sidebar-play-btn">Play Now</div>
+                        </div>
+                    </a>
+                    
+                    <a href="sprunki-italian-brainrot.html" class="sidebar-game-card">
+                        <img src="images/Sprunki ltalian Brainrot.jpg" alt="Sprunki Italian Brainrot" class="sidebar-game-image">
+                        <div class="sidebar-game-info">
+                            <div class="sidebar-game-title">Sprunki: Italian Brainrot</div>
+                            <div class="sidebar-game-description">Creative music composition with cognitive challenges</div>
+                            <div class="sidebar-play-btn">Play Now</div>
+                        </div>
+                    </a>
+                    
+                    <a href="italian-brainrot-clicker.html" class="sidebar-game-card">
+                        <img src="images/Italian Brainrot Clicker.jpg" alt="Italian Brainrot Clicker" class="sidebar-game-image">
+                        <div class="sidebar-game-info">
+                            <div class="sidebar-game-title">Italian Brainrot Clicker</div>
+                            <div class="sidebar-game-description">Addictive clicker gameplay with resource management</div>
+                            <div class="sidebar-play-btn">Play Now</div>
+                        </div>
+                    </a>
+                    
+                    <a href="italian-brainrot-puzzle.html" class="sidebar-game-card">
+                        <img src="images/Italian Brainrot Puzzle.jpg" alt="Italian Brainrot Puzzle" class="sidebar-game-image">
+                        <div class="sidebar-game-info">
+                            <div class="sidebar-game-title">Italian Brainrot Puzzle</div>
+                            <div class="sidebar-game-description">Pure puzzle-solving experience with Italian brainrot themes</div>
+                            <div class="sidebar-play-btn">Play Now</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h1>Steal Brainrot Online: Experience the Excitement of Roblox Meets Brainrot Gaming!</h1>
+
+            <p>Welcome to <strong>Steal Brainrot Online</strong>, an exhilarating online experience that combines the whimsical world of Roblox with the chaotic fun of Brainrot games! This multiplayer heist game allows you to engage in thrilling gameplay directly in your browser, even on mobile devices. Compete with opponents for the adorable Miss Cuphead and strive to emerge victorious. The charming graphics and immersive gameplay of <strong>Steal Brainrot Online</strong> promise to deliver a delightful gaming experience. Collect items, purchase costumes, and customize your Roblox character while enjoying continuously updated gameplay. If you're a fan of quirky fun, dive into <strong>Steal Brainrot Online</strong> today!</p>
+
+            <h2>What is Steal Brainrot Online?</h2>
+
+            <p><strong>Steal Brainrot Online</strong> is a chaotic, multiplayer heist game that can be played directly through your web browser. Released in August 2025 and built using HTML5 (Unity WebGL), this game invites players to engage in humorous, meme-themed competitions to collect, steal, and defend rare "Brainrot" memes. You'll encounter surreal characters such as "Tralalero Tralala" and "Cappuccino Assassino" as you navigate this whimsical world.</p>
+
+            <p>The primary objective is to build the ultimate meme collection by acquiring them from a central feed, stealing from rivals, protecting your own stash, and utilizing strategic boosters, traps, and "rebirth" mechanics to gain a competitive edge.</p>
+
+            <h2>Core Gameplay of Steal Brainrot Online</h2>
+
+            <h3>Multiplayer Heist Gameplay</h3>
+
+            <p>In <strong>Steal Brainrot Online</strong>, you will navigate a shared 3D environment filled with other players competing to collect and protect Brainrot memes. This dynamic setting ensures that no two games are ever the same!</p>
+
+            <h3>Meme Acquisition & Delivery</h3>
+
+            <p>Players can purchase memes from a central feed and transport them back to their own bases. However, be wary—opponents can outbid you or intercept your delivery mid-journey, adding an exciting layer of strategy to your heists.</p>
+
+            <h3>Base Defense</h3>
+
+            <p>To safeguard your meme stash, you can implement traps and security measures within <strong>Steal Brainrot Online</strong>. This defensive strategy is crucial to preventing theft and ensuring your hard-earned memes remain safe.</p>
+
+            <h3>Infiltration & Theft</h3>
+
+            <p>Not only can you protect your memes, but you can also infiltrate other players' bases to steal their precious collections. Timing and skill are essential for success in this chaotic environment.</p>
+
+            <h3>Boosters and Power-ups</h3>
+
+            <p>Utilize temporary enhancements to gain an advantage over your opponents. These power-ups can help you move faster, outmaneuver rivals, or secure your memes more reliably during intense gameplay.</p>
+
+            <h3>Rebirth System</h3>
+
+            <p>Once you've accumulated enough wealth in <strong>Steal Brainrot Online</strong>, you can choose to reset your progress in exchange for permanent bonuses. This rebirth mechanic allows you to accelerate your dominance in future sessions, making each playthrough uniquely rewarding.</p>
+
+            <h2>Cross-Platform Controls & Settings</h2>
+
+            <p><strong>Steal Brainrot Online</strong> offers intuitive controls for both desktop and mobile users:</p>
+
+            <ul>
+                <li><strong>Desktop Controls</strong>: Use WASD to move, Space to jump, and E to interact with objects.</li>
+                <li><strong>Mobile Controls</strong>: An on-screen joystick facilitates movement, while swiping allows you to look around. Buttons for jumping and interacting with objects enhance your mobile gaming experience.</li>
+            </ul>
+
+            <p>Additionally, players can adjust settings for graphics, mouse sensitivity, and music volume to optimize their gameplay.</p>
+
+            <h2>How to Play Steal Brainrot Online</h2>
+
+            <p>Getting started with <strong>Steal Brainrot Online</strong> is a breeze:</p>
+
+            <ol>
+                <li><strong>Launch the Game</strong>: Open your web browser and navigate to <strong>Steal Brainrot Online</strong>—no download or registration is required.</li>
+                <li><strong>Enter the Game World</strong>: Join an online server where players interact in real time, and the meme heists commence immediately.</li>
+                <li><strong>Acquire Brainrot Memes</strong>: Purchase memes from the central feed or steal them from other players to grow your collection.</li>
+                <li><strong>Deliver to Your Base</strong>: Carry memes back to your base while anticipating potential interceptions from rivals.</li>
+                <li><strong>Protect Your Collection</strong>: Set traps and locks in <strong>Steal Brainrot Online</strong> to safeguard your stored memes from theft.</li>
+                <li><strong>Steal from Others</strong>: Break into rival bases—your skill and timing will determine your success in this thrilling heist.</li>
+                <li><strong>Use Boosters Strategically</strong>: Deploy power-ups at opportune moments to win meme matches or defend your territory effectively.</li>
+                <li><strong>Rebirth for Growth</strong>: After accumulating sufficient resources, consider resetting your progress for enhanced performance in future sessions.</li>
+                <li><strong>Adjust Your Settings as Needed</strong>: Fine-tune graphics, audio, and controls to enhance your overall gameplay experience.</li>
+            </ol>
+
+            <h2>Use Cases for Steal Brainrot Online</h2>
+
+            <p><strong>Steal Brainrot Online</strong> is perfect for a variety of gaming experiences:</p>
+
+            <ul>
+                <li><strong>Casual Competitive Play</strong>: Engage in fast-paced, action-packed matches against real opponents in a humorous meme-themed setting.</li>
+                <li><strong>Social Gaming with Friends</strong>: Collaborate or compete with friends in this fun multiplayer platform.</li>
+                <li><strong>Light Strategy and Risk Management</strong>: Balance real-time decision-making with tactical offense and defense as you navigate the chaos.</li>
+                <li><strong>Engaging Break-Time Activity</strong>: Ideal for short, exciting gameplay sessions between tasks or during breaks.</li>
+            </ul>
+
+            <h2>Benefits of Steal Brainrot Online</h2>
+
+            <p><strong>Steal Brainrot Online</strong> offers numerous advantages for players:</p>
+
+            <ul>
+                <li><strong>Easy and Free Access</strong>: Fully browser-based, requiring no installation or download.</li>
+                <li><strong>Fast-Paced Multiplayer Fun</strong>: Each session delivers excitement and unpredictability, keeping players engaged.</li>
+                <li><strong>High Replay Value</strong>: The combination of stealing, securing, rebirth mechanics, and rival strategies creates a dynamic experience that encourages repeated play.</li>
+                <li><strong>Blend of Action and Strategy</strong>: Quick reflexes and planning are essential, as boosters, base defenses, and meme selection play significant roles.</li>
+                <li><strong>Cross-Device Compatibility</strong>: Supports both desktop and mobile devices with intuitive control schemes for all players.</li>
+                <li><strong>Evolving Meme Content</strong>: The quirky Brainrot memes add a humorous and visually engaging element to gameplay.</li>
+                <li><strong>Performance Optimization</strong>: Adjustable graphics and control settings cater to various device capabilities, ensuring smooth performance.</li>
+            </ul>
+
+            <h2>Summary of Steal Brainrot Online</h2>
+
+            <p><strong>Steal Brainrot Online</strong> stands out as a chaotic, meme-infused multiplayer heist game that combines the best elements of competitive gameplay with humorous Brainrot culture. Whether you're looking to dominate the leaderboard, enjoy casual multiplayer fun with friends, or simply indulge in some quirky gaming entertainment, this browser-based experience delivers on all fronts. Join the community today and see if you have what it takes to become the ultimate meme master!</p>
+        </div>
+    </div></body>
+
+
+    <script>
+        // CLEAN JAVASCRIPT - NO EXTERNAL DEPENDENCIES
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButton = document.getElementById('playButton');
+            const countdownOverlay = document.getElementById('countdownOverlay');
+            const countdownNumber = document.getElementById('countdownNumber');
+            const openGameButton = document.getElementById('openGameButton');
+
+            // Stage 1: Play button click
+            playButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                startCountdown();
+            });
+
+            // Stage 2: Start countdown
+            function startCountdown() {
+                playButton.style.display = 'none';
+                countdownOverlay.style.display = 'flex';
+                
+                let count = 10;
+                const countdownInterval = setInterval(() => {
+                    count--;
+                    countdownNumber.textContent = count;
+                    
+                    if (count <= 0) {
+                        clearInterval(countdownInterval);
+                        showOpenButton();
+                    }
+                }, 1000);
+            }
+
+            // Stage 3: Show open game button
+            function showOpenButton() {
+                countdownOverlay.style.display = 'none';
+                playButton.style.display = 'none';
+                openGameButton.style.display = 'block';
+            }
+
+            // Stage 4: Open game
+            openGameButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                const gameUrl = 'https://www.gameflare.com/embed/roblox-steal-a-brainrot/';
+                const gameWindow = window.open(gameUrl, '_blank', 'width=1200,height=800');
+                
+                if (!gameWindow) {
+                    alert('Please allow popups to open the game!');
+                } else {
+                    openGameButton.textContent = '✅ Game Opened!';
+                    openGameButton.style.background = 'linear-gradient(135deg, #34C759, #30D158)';
+                    
+                    // Add play again button
+                    setTimeout(() => {
+                        const playAgainBtn = document.createElement('button');
+                        playAgainBtn.textContent = '🔄 Play Again';
+                        playAgainBtn.className = 'play-button';
+                        playAgainBtn.onclick = resetGame;
+                        openGameButton.parentNode.appendChild(playAgainBtn);
+                    }, 2000);
+                }
+            });
+
+            // Reset function
+            function resetGame() {
+                playButton.style.display = 'block';
+                countdownOverlay.style.display = 'none';
+                openGameButton.style.display = 'none';
+                openGameButton.textContent = '🚀 Open Game in New Tab';
+                openGameButton.style.background = 'linear-gradient(135deg, #FF6B35, #F7931E)';
+                countdownNumber.textContent = '10';
+                
+                // Remove play again button if exists
+                const playAgainBtn = document.querySelector('.play-button:last-child');
+                if (playAgainBtn && playAgainBtn.textContent.includes('Play Again')) {
+                    playAgainBtn.remove();
+                }
+            }
+        });
+
+        // SECURITY: Block any external script injection
+        window.addEventListener('beforeunload', function() {
+            // Clear any potential malicious intervals
+            for (let i = 1; i < 99999; i++) {
+                window.clearInterval(i);
+                window.clearTimeout(i);
+            }
+        });
+    </script>
+</body>
+</html>
